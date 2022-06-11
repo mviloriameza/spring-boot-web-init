@@ -9,9 +9,35 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.viloriameza.springboot.web.app.model.Usuario;
+
 @Controller
 @RequestMapping("/app") // Ruta de primer nivel
 public class IndexController {
+	
+	@RequestMapping({"/perfil" , "/profile"})
+	public String perfil(Model model) {
+		
+		Usuario usuario = new Usuario();
+		usuario.setNombre("Nombre de la persona");
+		usuario.setApellido("Apellido de la persona");
+		
+		model.addAttribute("titulo", "Perfil: ".concat(usuario.getNombre()));
+		model.addAttribute("usuario", usuario);
+		
+		return "perfil";
+	}
+	
+	/**
+	 * Pasar datos directamente a la vista con Model
+	 */
+	@GetMapping( {"" , "/" , "/index" , "/home"})
+	public String index(Model model) {
+		
+		model.addAttribute("titulo", "Model - Spring Framework 5 & Spring Boot 2 desde cero a experto 2022");
+		
+		return "index";
+	}
 	
 	/**
 	 * Pasar datos directamente a la vista con ModelAndView
@@ -45,18 +71,8 @@ public class IndexController {
 		model.addAttribute("titulo", "ModelMap - Spring Framework 5 & Spring Boot 2 desde cero a experto 2022");
 		
 		return "index";
-	}*/
+	}*/	
 	
-	/**
-	 * Pasar datos directamente a la vista con Model
-	 */
-	@GetMapping( {"" , "/" , "/index" , "/home"})
-	public String index(Model model) {
-		
-		model.addAttribute("titulo", "Model - Spring Framework 5 & Spring Boot 2 desde cero a experto 2022");
-		
-		return "index";
-	}
 	
 	/**
 	 * Metodo inicial para responder con una vista a una petición
