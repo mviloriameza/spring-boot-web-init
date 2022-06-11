@@ -1,5 +1,7 @@
 package com.viloriameza.springboot.web.app.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,28 @@ import com.viloriameza.springboot.web.app.model.Usuario;
 @Controller
 @RequestMapping("/app") // Ruta de primer nivel
 public class IndexController {
+	
+	@RequestMapping({"/listar" , "/list"})
+	public String listar(Model model) {
+		
+		List<Usuario> usuarios = new ArrayList<>();
+		
+		for (int i = 0 ; i < 10 ; i++) {
+			
+			Usuario usuario = new Usuario();
+			usuario.setNombre("Nombre de la persona ".concat(String.valueOf(i)));
+			usuario.setApellido("Apellido de la persona ".concat(String.valueOf(i)));
+			usuario.setEmail("usuario".concat(String.valueOf(i)).concat("@dominio.com"));
+			
+			usuarios.add(usuario);
+			
+		}		
+		
+		model.addAttribute("titulo", "Listado de Usuarios");
+		model.addAttribute("usuarios", usuarios);
+		
+		return "listar";
+	}
 	
 	@RequestMapping({"/perfil" , "/profile"})
 	public String perfil(Model model) {
