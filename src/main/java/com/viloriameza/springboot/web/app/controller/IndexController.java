@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,10 +18,10 @@ import com.viloriameza.springboot.web.app.model.Usuario;
 @RequestMapping("/app") // Ruta de primer nivel
 public class IndexController {
 	
-	@RequestMapping({"/listar" , "/list"})
-	public String listar(Model model) {
+	@ModelAttribute("usuarios")
+	public List<Usuario> obtenerUsuarios(){
 		
-		List<Usuario> usuarios = new ArrayList<>();
+		List<Usuario> usuarios = new ArrayList<>();		
 		
 		for (int i = 0 ; i < 10 ; i++) {
 			
@@ -31,10 +32,32 @@ public class IndexController {
 			
 			usuarios.add(usuario);
 			
-		}		
+		}
+		
+		return usuarios;
+	}
+	
+	@RequestMapping({"/listar" , "/list"})
+	public String listar(Model model) {
+		
+		//Se comenta para implementar la etiqueta ModelAttribute en el método obtenerUsuarios()
+		/*List<Usuario> usuarios = new ArrayList<>();
+		
+		for (int i = 0 ; i < 10 ; i++) {
+			
+			Usuario usuario = new Usuario();
+			usuario.setNombre("Nombre de la persona ".concat(String.valueOf(i)));
+			usuario.setApellido("Apellido de la persona ".concat(String.valueOf(i)));
+			usuario.setEmail("usuario".concat(String.valueOf(i)).concat("@dominio.com"));
+			
+			usuarios.add(usuario);
+			
+		}*/		
 		
 		model.addAttribute("titulo", "Listado de Usuarios");
-		model.addAttribute("usuarios", usuarios);
+
+		//Se comenta para implementar la etiqueta ModelAttribute en el método obtenerUsuarios()
+		//model.addAttribute("usuarios", usuarios);
 		
 		return "listar";
 	}
